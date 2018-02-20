@@ -25,20 +25,20 @@ export interface Menu {
 @Injectable()
 export class MenuItems {
 
-  public MENUITEMS: Menu[] = [
-    {
-      state: 'home',
-      name: 'Inicio',
-      type: 'link',
-      icon: 'basic-accelerator'
-    },
-  ];
+  public MENUITEMS: Menu[] = [];
 
   constructor(
     private userService: UserService,
   ) { }
 
   getAll(): void {
+    this.MENUITEMS = [];
+    this.MENUITEMS.push({
+      state: 'home',
+      name: 'Inicio',
+      type: 'link',
+      icon: ''
+    });
     this.userService.getMenuItems().subscribe((response) => {
       response.forEach(el => {
         if (el.MEN_ISPARENT) {
