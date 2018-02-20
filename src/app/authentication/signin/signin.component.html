@@ -3,7 +3,7 @@
   <div class="card card-body mb-0 rounded-0 p-5 col-sm-12 col-md-6 col-lg-4">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="mb-3">
-        <img src="assets/images/logo.png" class="avatar-xs mb-1" alt="">
+        <img src="./assets/images/logos/Logo-1.png" class="avatar-xs mb-1" alt="" style="width: 100%; max-width: 17pc; display: block; margin: 0 auto; margin-bottom: 1pc !important;">
         <p class="ff-headers text-uppercase">Sign in to your account</p>
       </div>
       <fieldset class="form-group" [ngClass]="{'has-danger': form.controls['uname'].hasError('required') && form.controls['uname'].touched}">
@@ -25,14 +25,14 @@
           <small>Recover password</small>
         </a>
       </fieldset>
-      <label class="custom-control custom-checkbox mb-3">
+      <!--<label class="custom-control custom-checkbox mb-3">
         <input type="checkbox" class="custom-control-input">
         <span class="custom-control-indicator"></span>
         <span class="custom-control-description">Stay logged in</span>
-      </label>
+      </label>-->
       <div class="block"></div>
       <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Login</button>
-      <a class="btn btn-outline-primary btn-link" [routerLink]="['/authentication/signup']">Create an account!</a>
+      <!--<a class="btn btn-outline-primary btn-link" [routerLink]="['/authentication/signup']">Create an account!</a>-->
     </form>
   </div>
 </div>

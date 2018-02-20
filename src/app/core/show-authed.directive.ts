@@ -20,7 +20,7 @@ export class ShowAuthedDirective implements OnInit {
   condition: boolean;
 
   ngOnInit() {
-    this.userService.isAuthenticated.subscribe(
+    /*this.userService.isAuthenticated.subscribe(
       (isAuthenticated) => {
         if (isAuthenticated && this.condition || !isAuthenticated && !this.condition) {
           this.viewContainer.createEmbeddedView(this.templateRef);
@@ -28,7 +28,7 @@ export class ShowAuthedDirective implements OnInit {
           this.viewContainer.clear();
         }
       }
-    );
+    );*/
   }
 
   @Input() set showAuthed(condition: boolean) {

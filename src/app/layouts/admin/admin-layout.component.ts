@@ -3,11 +3,12 @@ import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
-import { MenuItems } from '../../shared/menu-items/menu-items';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/filter';
 import { TranslateService } from '@ngx-translate/core';
-import { GeneralService } from '../../core';
+import { GeneralService, UserService } from '../../core';
+import { HeaderComponent } from './header/header.component';
+
 
 const SMALL_WIDTH_BREAKPOINT = 991;
 
@@ -24,6 +25,7 @@ export interface Options {
 })
 export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
+  isAuthenticated: boolean;
   private _router: Subscription;
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
 
@@ -33,9 +35,6 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   showSettings = false;
   isDocked = false;
   isBoxed = false;
-  isOpened = true;
-  mode = 'push';
-  _mode = this.mode;
   _autoCollapseWidth = 991;
   width = window.innerWidth;
 
@@ -43,32 +42,32 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private generalService: GeneralService,
-    public menuItems: MenuItems,
     private router: Router,
     private route: ActivatedRoute,
     public translate: TranslateService,
     private modalService: NgbModal,
     private titleService: Title,
-    private zone: NgZone) {
+    private zone: NgZone,
+    private userService: UserService,
+    private header: HeaderComponent,
+  ) {
     const browserLang: string = translate.getBrowserLang();
     translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
     this.mediaMatcher.addListener(mql => zone.run(() => this.mediaMatcher = mql));
   }
 
   ngOnInit(): void {
-
-    if (this.isOver()) {
-      this._mode = 'over';
-      this.isOpened = false;
-    }
-
+    this.ValidateLogin();
+    this.SetCompanyProperties();
     this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
-      // Scroll to top on view load
       document.querySelector('.main-content').scrollTop = 0;
       this.runOnRouteChange();
     });
+  }
 
-    this.SetCompanyProperties();
+  toogleSidebar(): void {
+    debugger;
+    this.header.toogleSidebar();
   }
 
   ngAfterViewInit(): void {
@@ -80,10 +79,9 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   runOnRouteChange(): void {
-    if (this.isOver() || this.router.url === '/maps/fullscreen') {
-      this.isOpened = false;
+    if (this.header.isOver() || this.router.url === '/maps/fullscreen') {
+      this.header.isOpened = false;
     }
-
     this.route.children.forEach((route: ActivatedRoute) => {
       let activeRoute: ActivatedRoute = route;
       while (activeRoute.firstChild) {
@@ -103,41 +101,17 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.titleService.setTitle('Decima - Bootstrap 4 Angular Admin Template | ' + newTitle);
   }
 
-  toogleSidebar(): void {
-    this.isOpened = !this.isOpened;
-  }
-
-  isOver(): boolean {
-    return window.matchMedia(`(max-width: 991px)`).matches;
-  }
-
   openSearch(search) {
     this.modalService.open(search, { windowClass: 'search', backdrop: false });
   }
 
-  addMenuItem(): void {
-    this.menuItems.add({
-      state: 'menu',
-      name: 'MENU',
-      type: 'sub',
-      icon: 'basic-webpage-txt',
-      children: [
-        { state: 'menu', name: 'MENU' },
-        { state: 'menu', name: 'MENU' }
-      ]
-    });
+  private SetCompanyProperties(): void {
+    this.generalService.GetCompanyProperties(window.location.origin);
   }
 
-  private SetCompanyProperties(): void {
-    this.generalService
-      .GetCompanyProperties(window.location.origin)
-      .subscribe(
-      data => {
-        debugger;
-      },
-      err => {
-        debugger;
-      }
-      );
+  private ValidateLogin(): void {
+    if (!this.userService.isLooged()) {
+      this.router.navigateByUrl('/authentication/signin');
+    }
   }
 }

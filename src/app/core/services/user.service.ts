@@ -9,22 +9,18 @@ import { JwtService } from './jwt.service';
 import { User } from '../models';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { GeneralService } from './general.service';
+import { Router } from '@angular/router';
 
 
 @Injectable()
 export class UserService {
 
-  private currentUserSubject = new BehaviorSubject<any>({} as any);
-  public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
-  private looged: boolean = false;
-  private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
-  public isAuthenticated = this.isAuthenticatedSubject.asObservable();
-
   constructor(
     private apiService: ApiService,
     private http: HttpClient,
     private jwtService: JwtService,
-    private gs: GeneralService
+    private gs: GeneralService,
+    private router: Router,
   ) { }
 
   populate() {
@@ -41,16 +37,16 @@ export class UserService {
 
   setAuth(token: string) {
     this.jwtService.saveToken(token);
-    this.currentUserSubject.next(this.getApiUser());
-    this.isAuthenticatedSubject.next(true);
-    this.looged = true;
+    const usr = this.getApiUser().subscribe((rsp) => {
+      window.localStorage['currentUser'] = JSON.stringify(rsp);
+      this.router.navigateByUrl('/home');
+    });
   }
 
   purgeAuth() {
     this.jwtService.destroyToken();
-    this.currentUserSubject.next({} as any);
-    this.isAuthenticatedSubject.next(false);
-    this.looged = false;
+    window.localStorage.removeItem('currentUser');
+    this.router.navigateByUrl('/authentication/signin');
   }
 
   attemptAuth(url: string, credentials: any): Observable<User> {
@@ -58,32 +54,38 @@ export class UserService {
     return this.apiService.Loginpost(url, credentials)
       .pipe(map(
         data => {
-          this.setAuth(data['access_token']);
+          if (data['access_token'] !== null && data['access_token'] !== '') {
+            this.setAuth(data['access_token']);
+          } else {
+            alert('Usuario y/o contraseña incorrectos');
+          }
           return data;
         }
       ));
   }
 
-  getCurrentUser(): User {
-    return this.currentUserSubject.value;
+  getCurrentUser(): any {
+    return JSON.stringify(window.localStorage['currentUser']);
   }
 
   getApiUser(): any {
     return this.apiService.get('account/GetUserDeatil')
       .pipe(map(
-        data => { return data; })
+        data => {
+          return data;
+        })
       );
   }
 
   isLooged(): boolean {
-    return this.looged;
+    return window.localStorage['currentUser'] != null;
   }
 
   update(user): Observable<any> {
     return this.apiService
       .put('/user', { user })
       .pipe(map(data => {
-        this.currentUserSubject.next(data.user);
+        //this.currentUserSubject.next(data.user);
         return data.user;
       }));
   }

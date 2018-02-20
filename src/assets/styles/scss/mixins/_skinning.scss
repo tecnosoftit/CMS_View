@@ -508,6 +508,7 @@
 
 // Sidebar skin generator
 @mixin sidebar-variant($background, $color, $hover-active-color, $brand-background, $brand-color) {
+  $background: #164582;
   background-color: $background;
   .hamburger-icon {
     &:before,

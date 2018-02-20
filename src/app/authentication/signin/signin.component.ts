@@ -12,14 +12,15 @@ import { UserService } from '../../core';
 export class SigninComponent implements OnInit {
 
   public form: FormGroup;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private userService: UserService,
   ) { }
 
+
   ngOnInit() {
-    this.ValidateLogin();
     this.form = this.fb.group({
       uname: [null, Validators.compose([Validators.required])], password: [null, Validators.compose([Validators.required])]
     });
@@ -29,17 +30,8 @@ export class SigninComponent implements OnInit {
     this.userService
       .attemptAuth('login', { user: this.form.value.uname, password: this.form.value.password })
       .subscribe(
-      data => {
-        debugger;
-      },
-      err => {
-        debugger;
-      }
-      );
+      data => { }, err => {
+        alert('Usuario y/o contraseña incorrectos');
+      });
   }
-
-  private ValidateLogin(): void {
-
-  }
-
 }
