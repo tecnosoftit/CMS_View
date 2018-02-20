@@ -37,7 +37,7 @@ export class MenuItems {
       state: 'home',
       name: 'Inicio',
       type: 'link',
-      icon: ''
+      icon: 'basic-accelerator'
     });
     this.userService.getMenuItems().subscribe((response) => {
       response.forEach(el => {
