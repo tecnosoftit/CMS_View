@@ -27,8 +27,12 @@ export class AuthLayoutComponent implements OnInit {
   }
 
   private ValidateLogin(): void {
-    if (this.userService.isLooged()) {
-      this.router.navigateByUrl('/home');
-    }
+    this.userService.isLooged().subscribe((data) => {
+      if (data) {
+        this.router.navigateByUrl('/home');
+      }
+    }, error => {
+      console.log('Communication error with server');
+    });
   }
 }

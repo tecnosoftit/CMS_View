@@ -8,6 +8,7 @@ import 'rxjs/add/operator/filter';
 import { TranslateService } from '@ngx-translate/core';
 import { GeneralService, UserService } from '../../core';
 import { HeaderComponent } from './header/header.component';
+import { error } from 'util';
 
 
 const SMALL_WIDTH_BREAKPOINT = 991;
@@ -98,7 +99,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setTitle(newTitle: string) {
-    this.titleService.setTitle('Decima - Bootstrap 4 Angular Admin Template | ' + newTitle);
+    //this.titleService.setTitle('Decima - Bootstrap 4 Angular Admin Template | ' + newTitle);
   }
 
   openSearch(search) {
@@ -110,8 +111,12 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private ValidateLogin(): void {
-    if (!this.userService.isLooged()) {
+    this.userService.isLooged().subscribe((data) => {
+      if (!data) {
+        this.router.navigateByUrl('/authentication/signin');
+      }
+    }, error => {
       this.router.navigateByUrl('/authentication/signin');
-    }
+    });
   }
 }

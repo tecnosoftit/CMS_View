@@ -37,15 +37,11 @@ export class UserService {
 
   setAuth(token: string) {
     this.jwtService.saveToken(token);
-    const usr = this.getApiUser().subscribe((rsp) => {
-      window.localStorage['currentUser'] = JSON.stringify(rsp);
-      this.router.navigateByUrl('/home');
-    });
+    this.router.navigateByUrl('/home');
   }
 
   purgeAuth() {
     this.jwtService.destroyToken();
-    window.localStorage.removeItem('currentUser');
     this.router.navigateByUrl('/authentication/signin');
   }
 
@@ -65,7 +61,9 @@ export class UserService {
   }
 
   getCurrentUser(): any {
-    return JSON.stringify(window.localStorage['currentUser']);
+    return this.getApiUser().subscribe((rsp) => {
+      return rsp;
+    });
   }
 
   getApiUser(): any {
@@ -77,8 +75,11 @@ export class UserService {
       );
   }
 
-  isLooged(): boolean {
-    return window.localStorage['currentUser'] != null;
+  isLooged(): Observable<boolean> {
+    return this.apiService.get('account/IsLogged')
+      .map(data => {
+        return data;
+      });
   }
 
   update(user): Observable<any> {
@@ -88,5 +89,10 @@ export class UserService {
         //this.currentUserSubject.next(data.user);
         return data.user;
       }));
+  }
+
+  getMenuItems(): Observable<any> {
+    return this.apiService
+      .get('account/GetUserMenu').map(data => { return data; });
   }
 }
