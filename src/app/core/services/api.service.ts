@@ -38,10 +38,9 @@ export class ApiService {
 
   Loginpost(path: string, body: Object = {}): Observable<any> {
     let bd = new HttpParams()
-    .set('grant_type', 'password')
-    .set('username', body['user'] + '|' + body['company'])
-    .set('password', body['password']);
-    debugger;
+      .set('grant_type', 'password')
+      .set('username', body['user'] + '|' + body['company'])
+      .set('password', body['password']);
     return this.http.post(
       `${APP_CONFIG.apiBaseUrl}${path}`, bd
     ).pipe(catchError(this.formatErrors));

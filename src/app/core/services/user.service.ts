@@ -10,12 +10,13 @@ import { User } from '../models';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { GeneralService } from './general.service';
 
+
 @Injectable()
 export class UserService {
 
-  private currentUserSubject = new BehaviorSubject<User>({} as User);
+  private currentUserSubject = new BehaviorSubject<any>({} as any);
   public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
-
+  private looged: boolean = false;
   private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
   public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
@@ -26,10 +27,7 @@ export class UserService {
     private gs: GeneralService
   ) { }
 
-  // Verify JWT in localstorage with server & load user's info.
-  // This runs once on application startup.
   populate() {
-    // If JWT detected, attempt to get & store user's info
     if (this.jwtService.getToken()) {
       this.apiService.get('/user')
         .subscribe(
@@ -37,36 +35,30 @@ export class UserService {
         err => this.purgeAuth()
         );
     } else {
-      // Remove any potential remnants of previous auth states
       this.purgeAuth();
     }
   }
 
-  setAuth(user: User) {
-    // Save JWT sent from server in localstorage
-    this.jwtService.saveToken(user.token);
-    // Set current user data into observable
-    this.currentUserSubject.next(user);
-    // Set isAuthenticated to true
+  setAuth(token: string) {
+    this.jwtService.saveToken(token);
+    this.currentUserSubject.next(this.getApiUser());
     this.isAuthenticatedSubject.next(true);
+    this.looged = true;
   }
 
   purgeAuth() {
-    // Remove JWT from localstorage
     this.jwtService.destroyToken();
-    // Set current user to an empty object
-    this.currentUserSubject.next({} as User);
-    // Set auth status to false
+    this.currentUserSubject.next({} as any);
     this.isAuthenticatedSubject.next(false);
+    this.looged = false;
   }
 
-  attemptAuth(url: string, credentials: any): Observable<User> {    
+  attemptAuth(url: string, credentials: any): Observable<User> {
     credentials['company'] = this.gs.GetCurrentCompany()['Com_ID'];
     return this.apiService.Loginpost(url, credentials)
       .pipe(map(
         data => {
-          debugger;
-          this.setAuth(data.user);
+          this.setAuth(data['access_token']);
           return data;
         }
       ));
@@ -76,15 +68,23 @@ export class UserService {
     return this.currentUserSubject.value;
   }
 
-  // Update the user on the server (email, pass, etc)
-  update(user): Observable<User> {
+  getApiUser(): any {
+    return this.apiService.get('account/GetUserDeatil')
+      .pipe(map(
+        data => { return data; })
+      );
+  }
+
+  isLooged(): boolean {
+    return this.looged;
+  }
+
+  update(user): Observable<any> {
     return this.apiService
       .put('/user', { user })
       .pipe(map(data => {
-        // Update the currentUser observable
         this.currentUserSubject.next(data.user);
         return data.user;
       }));
   }
-
 }
