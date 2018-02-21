@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { GeneralService, UserService } from '../../core';
 import { HeaderComponent } from './header/header.component';
 import { error } from 'util';
-
+import { interval } from 'rxjs/observable/interval';
 
 const SMALL_WIDTH_BREAKPOINT = 991;
 
@@ -29,7 +29,8 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   isAuthenticated: boolean;
   private _router: Subscription;
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
-
+  private source = interval(60000);
+  private subscribe;
   currentLang = 'en';
   options: Options;
   theme = 'light';
@@ -114,9 +115,14 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.userService.isLooged().subscribe((data) => {
       if (!data) {
         this.router.navigateByUrl('/authentication/signin');
+      } else {
+        this.subscribe = this.source.subscribe((val) => {
+          this.ValidateLogin();
+        });
       }
     }, error => {
-      this.router.navigateByUrl('/authentication/signin');
+      this.subscribe.unsubscribe();
+      this.userService.purgeAuth();
     });
   }
 }

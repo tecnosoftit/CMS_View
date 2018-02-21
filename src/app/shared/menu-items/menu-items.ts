@@ -48,7 +48,7 @@ export class MenuItems {
               children.push(al);
             }
           });
-          let childrenMenu = [];
+          let childrenMenu: ChildrenItems[] = [];
           children.forEach(al => {
             childrenMenu.push({
               state: al.MEN_CONTROLLER + '/' + al.MEN_VIEW,
