@@ -13,6 +13,10 @@ export const AppRoutes: Routes = [{
     path: 'docs',
     loadChildren: './docs/docs.module#DocsModule'
   },
+  {
+    path:'account',
+    loadChildren:'./account/account.module#AccountModule'
+  }
 
 ]
 }, {
@@ -25,10 +29,6 @@ export const AppRoutes: Routes = [{
     path: 'error',
     loadChildren: './error/error.module#ErrorModule'
   },
-  {
-    path:'account',
-    loadChildren:'./account/account.module#AccountModule'
-  }
   ]
 }, {
   path: '',
