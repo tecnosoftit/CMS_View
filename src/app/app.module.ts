@@ -30,6 +30,7 @@ import { FooterComponent } from './layouts/admin/footer/footer.component';
 import { HeaderComponent } from './layouts/admin/header/header.component';
 
 
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -42,6 +43,7 @@ export function createTranslateLoader(http: HttpClient) {
     LeftPanelComponent,
     FooterComponent,
     HeaderComponent,
+
   ],
   imports: [
     BrowserModule,

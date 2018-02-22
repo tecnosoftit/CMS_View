@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
@@ -14,7 +15,6 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class UserService {
-
   constructor(
     private apiService: ApiService,
     private http: HttpClient,
@@ -25,7 +25,7 @@ export class UserService {
 
   populate() {
     if (this.jwtService.getToken()) {
-      this.apiService.get('/user')
+      this.apiService.get('')
         .subscribe(
         data => this.setAuth(data.user),
         err => this.purgeAuth()
@@ -96,3 +96,4 @@ export class UserService {
       .get('account/GetUserMenu').map(data => { return data; });
   }
 }
+

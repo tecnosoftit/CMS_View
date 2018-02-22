@@ -12,7 +12,9 @@ export const AppRoutes: Routes = [{
   }, {
     path: 'docs',
     loadChildren: './docs/docs.module#DocsModule'
-  }]
+  },
+
+]
 }, {
   path: '',
   component: AuthLayoutComponent,
@@ -22,7 +24,12 @@ export const AppRoutes: Routes = [{
   }, {
     path: 'error',
     loadChildren: './error/error.module#ErrorModule'
-  }]
+  },
+  {
+    path:'account',
+    loadChildren:'./account/account.module#AccountModule'
+  }
+  ]
 }, {
   path: '',
   component: AdminLayoutComponent,
@@ -48,4 +55,3 @@ export const AppRoutes: Routes = [{
   path: '**',
   redirectTo: 'error/404'
 }];
-
