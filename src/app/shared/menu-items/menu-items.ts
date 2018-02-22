@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { UserService } from '../../core';
+import { forEach } from '@angular/router/src/utils/collection';
 
 export interface BadgeItem {
   type: string;
@@ -20,52 +22,57 @@ export interface Menu {
   children?: ChildrenItems[];
 }
 
-const MENUITEMS = [
-  {
-    state: '/',
-    name: 'HOME',
-    type: 'link',
-    icon: 'basic-accelerator'
-  },
-  {
-    state: 'authentication',
-    name: 'AUTHENTICATION',
-    type: 'sub',
-    icon: 'basic-lock-open',
-    children: [
-      {
-        state: 'signin',
-        name: 'SIGNIN'
-      },
-      {
-        state: 'signup',
-        name: 'SIGNUP'
-      },
-      {
-        state: 'forgot',
-        name: 'FORGOT'
-      },
-      {
-        state: 'lockscreen',
-        name: 'LOCKSCREEN'
-      },
-    ]
-  },
-  {
-    state: 'docs',
-    name: 'DOCS',
-    type: 'link',
-    icon: 'basic-sheet-txt'
-  }
-];
-
 @Injectable()
 export class MenuItems {
-  getAll(): Menu[] {
-    return MENUITEMS;
-  }
 
-  add(menu: Menu) {
-    MENUITEMS.push(menu);
+  public MENUITEMS: Menu[] = [];
+
+  constructor(
+    private userService: UserService,
+  ) { }
+
+  getAll(): void {
+    this.MENUITEMS = [];
+    this.MENUITEMS.push({
+      state: 'home',
+      name: 'Inicio',
+      type: 'link',
+      icon: 'basic-accelerator'
+    });
+    this.userService.getMenuItems().subscribe((response) => {
+      response.forEach(el => {
+        if (el.MEN_ISPARENT) {
+          let children = [];
+          response.forEach(al => {
+            if (!al.MEN_ISPARENT && al.MEN_PARENTID === el.MEN_ID) {
+              children.push(al);
+            }
+          });
+          let childrenMenu: ChildrenItems[] = [];
+          children.forEach(al => {
+            childrenMenu.push({
+              state: al.MEN_CONTROLLER + '/' + al.MEN_VIEW,
+              name: al.MEN_NAME
+            })
+          });
+          this.MENUITEMS.push({
+            state: el.MEN_CONTROLLER + '/' + el.MEN_VIEW,
+            name: el.MEN_NAME,
+            type: 'sub',
+            icon: 'basic-sheet-txt',
+            children: childrenMenu
+          });
+        } else {
+          if (!el.MEN_ISPARENT && el.MEN_PARENTID === 0) {
+            this.MENUITEMS.push({
+              state: el.MEN_CONTROLLER + '/' + el.MEN_VIEW,
+              name: el.MEN_NAME,
+              type: 'link',
+              icon: 'basic-sheet-txt'
+            });
+          }
+        }
+      });
+    });
   }
 }

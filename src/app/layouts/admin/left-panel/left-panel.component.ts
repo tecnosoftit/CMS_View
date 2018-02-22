@@ -13,18 +13,6 @@ export class LeftPanelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-  }
-
-  addMenuItem(): void {
-    this.menuItems.add({
-      state: 'menu',
-      name: 'MENU',
-      type: 'sub',
-      icon: 'basic-webpage-txt',
-      children: [
-        { state: 'menu', name: 'MENU' },
-        { state: 'menu', name: 'MENU' }
-      ]
-    });
+    this.menuItems.getAll();
   }
 }

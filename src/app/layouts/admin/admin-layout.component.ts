@@ -8,7 +8,8 @@ import 'rxjs/add/operator/filter';
 import { TranslateService } from '@ngx-translate/core';
 import { GeneralService, UserService } from '../../core';
 import { HeaderComponent } from './header/header.component';
-
+import { error } from 'util';
+import { interval } from 'rxjs/observable/interval';
 
 const SMALL_WIDTH_BREAKPOINT = 991;
 
@@ -28,7 +29,8 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   isAuthenticated: boolean;
   private _router: Subscription;
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
-
+  private source = interval(60000);
+  private subscribe;
   currentLang = 'en';
   options: Options;
   theme = 'light';
@@ -98,7 +100,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setTitle(newTitle: string) {
-    this.titleService.setTitle('Decima - Bootstrap 4 Angular Admin Template | ' + newTitle);
+    //this.titleService.setTitle('Decima - Bootstrap 4 Angular Admin Template | ' + newTitle);
   }
 
   openSearch(search) {
@@ -110,8 +112,17 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private ValidateLogin(): void {
-    if (!this.userService.isLooged()) {
-      this.router.navigateByUrl('/authentication/signin');
-    }
+    this.userService.isLooged().subscribe((data) => {
+      if (!data) {
+        this.router.navigateByUrl('/authentication/signin');
+      } else {
+        this.subscribe = this.source.subscribe((val) => {
+          this.ValidateLogin();
+        });
+      }
+    }, error => {
+      this.subscribe.unsubscribe();
+      this.userService.purgeAuth();
+    });
   }
 }
