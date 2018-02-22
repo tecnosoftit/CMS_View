@@ -33,6 +33,17 @@ export const AppRoutes: Routes = [{
     path: 'home',
     loadChildren: './dashboard/dashboard.module#DashboardModule'
   }]
+},
+{
+  path: '',
+  component: AdminLayoutComponent,
+  children: [{
+    path: 'plans',
+    loadChildren: './plans/plans.module#PlansModule'
+  }, {
+    path: 'home',
+    loadChildren: './dashboard/dashboard.module#DashboardModule'
+  }]
 },{
   path: '**',
   redirectTo: 'error/404'

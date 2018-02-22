@@ -21,7 +21,8 @@ import {
   JwtService,
   UserService,
   HttpTokenInterceptor,
-  GeneralService
+  GeneralService,
+  AppService
 } from './core';
 import { CoreModule } from './core/core.module';
 import { LeftPanelComponent } from './layouts/admin/left-panel/left-panel.component';
@@ -67,7 +68,8 @@ export function createTranslateLoader(http: HttpClient) {
     JwtService,
     UserService,
     GeneralService,
-    HeaderComponent
+    HeaderComponent,
+    AppService
   ],
   bootstrap: [AppComponent]
 })
