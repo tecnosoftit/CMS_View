@@ -1,0 +1,40 @@
+<form name="MenuForm">
+  <div class="alert alert-primary" role="alert">
+    You are creating the option menu
+  </div>
+  <div class="form-group row">
+    <label for="inputMenuname" class="col-sm-2 col-form-label">Menu name</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control is-valid" id="inputMenuname" placeholder="Menu name" required ng-model="model.MenuName" name="MenuName">
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-2">Is Parent</div>
+    <div class="col-sm-10">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="isParent">
+        <label class="form-check-label" for="gridCheck1">
+          Select this option if you're creating a principal menu option
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for=inputMenuController class="col-sm-2 col-form-label">Menu Controller</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control is-valid" id="inputMenuController" placeholder="Menu Controller">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputMenuView" class="col-sm-2 col-form-label">Menu View</label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control is-valid" id="inputMenuView" placeholder="Menu View">
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-6">
+      <button type="submit" class="btn btn-primary btn-lg" value="Submit">Create</button>
+      <button type="reset" class="btn btn-dark btn-lg" value="Reset">Cancel</button>
+    </div>
+  </div>
+</form>
