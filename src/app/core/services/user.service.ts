@@ -95,5 +95,11 @@ export class UserService {
     return this.apiService
       .get('account/GetUserMenu').map(data => { return data; });
   }
+
+  getCreateuser(): Observable<any> {
+    debugger;
+    return this.apiService
+    .get('account/CreateUser').map(data => {return data; })
+  }
 }
 

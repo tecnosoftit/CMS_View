@@ -6,10 +6,3 @@ export interface User {
     image: string;
 
   }
-  export class user {
-    Password: string;
-    Username: string;
-    FistName: string;
-    Company: string;
-    Email: string;
-  }
