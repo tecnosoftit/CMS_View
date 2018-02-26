@@ -1,11 +1,18 @@
 import { Routes } from '@angular/router';
 
-import { MenuComponent } from './menu.component';
+import { CreateMenuComponent } from './create-menu/create-menu.component';
 
-export const MenuRoutes: Routes = [{
-  path: '',
-  component: MenuComponent,
-  data: {
-    heading: 'Menu'
-  }
-}];
+export const MenuRoutes: Routes = [
+  {
+    path: '',
+    children:[
+      {
+        path: 'createmenu',
+        component: CreateMenuComponent
+      },
+    ]
+    //component: MenuComponent,
+    //data: {
+     //heading: 'Menu'
+    //}
+  }];
