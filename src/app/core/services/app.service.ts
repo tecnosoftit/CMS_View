@@ -22,4 +22,13 @@ export class AppService {
             }));
     }
 
+    GetCompany() {
+      return this.apiService
+          .get('/cms/getcompany')
+          .pipe(map(data => {
+              return data;
+          }));
+  }
 }
+
+

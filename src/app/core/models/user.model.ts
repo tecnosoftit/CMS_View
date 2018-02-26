@@ -8,12 +8,14 @@ export interface User {
 }
 
 export interface CreateUser {
-  Roles: String;
-  Password: String;
   FistName: String;
   SurName: String;
   Email: String;
-  CompanyId: String;
+  Password: String;
   Phone: String;
+  Roles: String;
   Birthday: Date;
+  CompanyId: String;
+
+
 }

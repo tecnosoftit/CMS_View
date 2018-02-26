@@ -1,36 +1,61 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="row">
-        <div class="col">
-            <label for="inputname4">First Name</label>
-            <input type="text" class="form-control" id="inputname4" placeholder="First Name" required [formControl]="form.controls['name']">
-        </div>
-        <div class="col">
-            <label for="inputPassword4">Password</label>
-            <input type="text" class="form-control" id="inputPassword4" placeholder="Password" required [formControl]="form.controls['password']">
-        </div>
-        <div class="col">
-            <label for="inputCompany4">Company</label>
-            <select id="inputCompany4" class="form-control" [formControl]="form.controls['company']">
-                <option value="asdasd">Compañía prueba</option>
-                <option *ngFor="let company of companies" [id]="company.IDENTIFICATION">{{company.NAME_}}</option>
-            </select>
+<form>
+
+    <div class="form-group row">
+        <label for="inputFirstname3" class="col-sm-2 col-form-label">First  Name</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="inputFirstname3" placeholder="First Name" required [formControl]="form.controls['name']">
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <label for="inputAddress">Email Address</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="mail@mail.com" required [formControl]="form.controls['email']">
-        </div>
-        <div class="col">
-            <label for="inputState">Role</label>
-            <select id="inputState" class="form-control" [formControl]="form.controls['role']">
-                <option *ngFor="let role of roles" [id]="role.IDENTIFICATION">{{role.NAME_}}</option>
-            </select>
-        </div>
-        <div class="col">
-            <label for="inputBirthday">Birthday</label>
-            <input type="date" class="form-control" id="inputBirthday" required [formControl]="form.controls['birthday']">
+    <div class="form-group row">
+        <label for="inputSurName3" class="col-sm-2 col-form-label">SurName</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" id="inputSurName3" placeholder="SurName" required [formControl]="form.controls['SurName']">
         </div>
     </div>
-    <button type="submit" class="btn btn-primary">Create user</button>
+    <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-6">
+            <input type="email" class="form-control" id="inputEmail3" placeholder="Email" required [formControl]="form.controls['email']">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-6">
+            <input type="password" class="form-control" id="inputPassword3" placeholder="Password" required [formControl]="form.controls['password']">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputPhone3" class="col-sm-2 col-form-label">Phone</label>
+        <div class="col-sm-2">
+            <input type="text" class="form-control" id="inputPhone3" placeholder="Phone" [formControl]="form.controls['Phone']">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputBirthday3" class="col-sm-2 col-form-label">Birthday</label>
+        <div class="col-sm-2">
+            <input type="date" class="form-control" id="inputBirthday3" placeholder="Birthday" required [formControl]="form.controls['birthday']">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="roles" class="col-sm-2 col-form-label">Roles</label>
+        <div class="col-md-6">
+            <select multiple class="form-control" id="rol">
+          <option *ngFor="let role of roles" [id]="role.IDENTIFICATION">{{role.NAME_}}</option>
+        </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="company" class="col-sm-2 col-form-label">Company</label>
+        <div class="col-md-6">
+            <select class="form-control" id="company">
+        <option *ngFor="let company of companies" [id]="company.IDENTIFICATION" >{{company.NAME_}}</option>
+      </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-8">
+            <button type="submit" class="btn btn-primary">Create User</button>
+        </div>
+    </div>
+
 </form>

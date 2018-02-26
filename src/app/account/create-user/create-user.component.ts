@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../core/services/user.service';
 import { FormBuilder, FormGroup, Validators, FormControl, FormsModule } from '@angular/forms';
-import { AppService } from '../../core';
+import { AppService, ApiService } from '../../core';
 
 @Component({
   selector: 'app-create-user',
@@ -13,18 +13,26 @@ export class CreateUserComponent implements OnInit {
 
   public roles: any[] = [];
   public form: FormGroup;
-
+public companies: any[] = [];
   constructor(
     private AppService: AppService,
     private fb: FormBuilder,
     private router: Router,
     private userService: UserService,
+    private ApiService :ApiService
   ) { }
 
   ngOnInit() {
     this.AppService.GetRoles().subscribe((response) => {
       this.roles = response;
+
     });
+    this.AppService.GetCompany().subscribe((Response)=> {
+      this.companies = Response;
+      console.log(this.companies);
+    });
+
+
     this.form = this.fb.group({
       name: [null, Validators.compose([Validators.required])],
       password: [null, Validators.compose([Validators.required])],
@@ -32,6 +40,8 @@ export class CreateUserComponent implements OnInit {
       email: [null, Validators.compose([Validators.required])],
       role: [null, Validators.compose([Validators.required])],
       birthday: [null, Validators.compose([Validators.required])],
+      SurName: [null, Validators.compose([Validators.required])],
+      Phone: [null, Validators.compose([Validators.required])],
     });
   }
 
@@ -44,9 +54,9 @@ export class CreateUserComponent implements OnInit {
         Birthday: this.form.value.birthday,
         CompanyId: this.form.value.company,
         Email: this.form.value.email,
-        Phone: this.form.value.password,
+        Phone: this.form.value.Phone,
         Roles: this.form.value.role,
-        SurName: this.form.value.password,
+        SurName: this.form.value.SurName,
       })
       .subscribe(
       data => { }, err => {
