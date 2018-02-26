@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
@@ -10,11 +11,11 @@ import { User } from '../models';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { GeneralService } from './general.service';
 import { Router } from '@angular/router';
+import { CreateUser } from '../index';
 
 
 @Injectable()
 export class UserService {
-
   constructor(
     private apiService: ApiService,
     private http: HttpClient,
@@ -25,7 +26,7 @@ export class UserService {
 
   populate() {
     if (this.jwtService.getToken()) {
-      this.apiService.get('/user')
+      this.apiService.get('')
         .subscribe(
         data => this.setAuth(data.user),
         err => this.purgeAuth()
@@ -96,4 +97,10 @@ export class UserService {
     return this.apiService
       .get('account/GetUserMenu').map(data => { return data; });
   }
+
+  createUser(url: string, rq: CreateUser): Observable<boolean> {
+    return this.apiService
+      .post(url, rq).map(data => { return data; })
+  }
 }
+

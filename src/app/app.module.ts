@@ -21,12 +21,14 @@ import {
   JwtService,
   UserService,
   HttpTokenInterceptor,
-  GeneralService
+  GeneralService,
+  AppService
 } from './core';
 import { CoreModule } from './core/core.module';
 import { LeftPanelComponent } from './layouts/admin/left-panel/left-panel.component';
 import { FooterComponent } from './layouts/admin/footer/footer.component';
 import { HeaderComponent } from './layouts/admin/header/header.component';
+
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -41,6 +43,7 @@ export function createTranslateLoader(http: HttpClient) {
     LeftPanelComponent,
     FooterComponent,
     HeaderComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -67,7 +70,8 @@ export function createTranslateLoader(http: HttpClient) {
     JwtService,
     UserService,
     GeneralService,
-    HeaderComponent
+    HeaderComponent,
+    AppService
   ],
   bootstrap: [AppComponent]
 })

@@ -12,7 +12,13 @@ export const AppRoutes: Routes = [{
   }, {
     path: 'docs',
     loadChildren: './docs/docs.module#DocsModule'
-  }]
+  },
+  {
+    path:'account',
+    loadChildren:'./account/account.module#AccountModule'
+  }
+
+]
 }, {
   path: '',
   component: AuthLayoutComponent,
@@ -22,9 +28,30 @@ export const AppRoutes: Routes = [{
   }, {
     path: 'error',
     loadChildren: './error/error.module#ErrorModule'
-  }]
+  },
+  ]
 }, {
+  path: '',
+  component: AdminLayoutComponent,
+  children: [{
+    path: 'menu',
+    loadChildren: './menu/menu.module#MenuModule'
+  }, {
+    path: 'home',
+    loadChildren: './dashboard/dashboard.module#DashboardModule'
+  }]
+},
+{
+  path: '',
+  component: AdminLayoutComponent,
+  children: [{
+    path: 'plans',
+    loadChildren: './plans/plans.module#PlansModule'
+  }, {
+    path: 'home',
+    loadChildren: './dashboard/dashboard.module#DashboardModule'
+  }]
+},{
   path: '**',
   redirectTo: 'error/404'
 }];
-

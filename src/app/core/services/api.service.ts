@@ -14,7 +14,7 @@ export class ApiService {
   ) { }
 
   private formatErrors(error: any) {
-    debugger;
+    // debugger;
     return new ErrorObservable(error.json());
   }
 
