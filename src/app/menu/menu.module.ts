@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-
-import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
-
-import { MenuComponent } from './menu.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CreateMenuComponent } from './create-menu/create-menu.component';
 import { MenuRoutes } from './menu.routing';
 import { AppComponent } from '../app.component';
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(MenuRoutes), NgbAccordionModule],
-  declarations: [MenuComponent]
+  imports: [
+    CommonModule, 
+    RouterModule.forChild(MenuRoutes),
+    FormsModule,
+    ReactiveFormsModule,
+  ],
+  declarations: [CreateMenuComponent],
+  providers: []
 })
 
 export class MenuModule {}
