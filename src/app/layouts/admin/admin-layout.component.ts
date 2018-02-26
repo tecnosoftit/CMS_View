@@ -113,6 +113,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private ValidateLogin(): void {
     this.userService.isLooged().subscribe((data) => {
+      debugger;
       if (!data) {
         this.router.navigateByUrl('/authentication/signin');
       } else {

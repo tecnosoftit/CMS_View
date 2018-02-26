@@ -41,6 +41,7 @@ export class UserService {
   }
 
   purgeAuth() {
+    debugger;
     this.jwtService.destroyToken();
     this.router.navigateByUrl('/authentication/signin');
   }
