@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-
-import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
-
-import { PlansComponent } from './plans.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CreatePlansComponent } from './create-plans/create-plans.component';
 import { PlansRoutes } from './plans.routing';
 import { AppComponent } from '../app.component';
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(PlansRoutes), NgbAccordionModule],
-  declarations: [PlansComponent]
+  imports: [
+    CommonModule,
+    RouterModule.forChild(PlansRoutes),
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  declarations: [CreatePlansComponent],
+  providers: []
 })
 
-export class PlansModule {}
+export class PlansModule { }

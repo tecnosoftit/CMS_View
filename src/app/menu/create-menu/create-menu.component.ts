@@ -13,7 +13,6 @@ export class CreateMenuComponent implements OnInit{
   
   public roles: any[] = [];
   public form: FormGroup;
-  public seleccion = "";
 
   constructor(
     private fb: FormBuilder,
