@@ -1,0 +1,32 @@
+<div class="alert alert-primary" role="alert">
+    You are creating the menu option
+</div>
+<nav class="nvbar navbar-light navbar-expand-lg">
+    <form class="form-inline" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <span class="align-middle">Search by Menu ID</span>
+        <input class="form-control is-valid mr-2 mr-sm-2" type="text" placeholder="Search" [formControl]="form.controls['id']">
+        <button class="btn btn-outline-primary my-2 my-sm-4" type="submit">Search</button>
+    </form>
+</nav>
+<table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Menu</th>
+                <th scope="col">Controller</th>
+                <th scope="col">View</th>
+                <th scope="col">Parent ID</th>
+                <th scope="col">Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let otros of menu">
+                <th>{{otros.MEN_ID}}</th>
+                <th>{{otros.MEN_NAME}}</th>
+                <td>{{otros.MEN_CONTROLLER}}</td>
+                <td>{{otros.MEN_VIEW}}</td>
+                <td>{{otros.MEN_PARENTID}}</td>
+                <td>{{otros.ROL_NAME}}</td>
+            </tr>
+        </tbody>
+    </table>
