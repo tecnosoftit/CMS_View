@@ -1,24 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl, FormsModule } from '@angular/forms';
-import { ngModuleJitUrl } from '@angular/compiler';
-import { NgModule } from '@angular/core/src/metadata/ng_module';
-
-//import { MenuService } from '../../core';
+import { AppService } from '../../core';
 
 @Component({
-  selector: 'app-plans',
-  templateUrl: './plans.component.html',
-  styleUrls: ['./plans.component.scss']
+  selector: 'app-create-plans',
+  templateUrl: './create-plans.component.html',
+  styleUrls: ['./create-plans.component.scss']
 })
 
-export class PlansComponent implements OnInit{
+export class CreatePlansComponent implements OnInit{
   
   public form: FormGroup;
+  
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private AppService: AppService
   ) { }
 
   ngOnInit() {

@@ -13,7 +13,6 @@ export class CreateMenuComponent implements OnInit{
   
   public roles: any[] = [];
   public form: FormGroup;
-  public seleccion = "";
 
   constructor(
     private fb: FormBuilder,
@@ -37,7 +36,6 @@ export class CreateMenuComponent implements OnInit{
   }
 
   onSubmit(){
-    debugger
     this.AppService
       .createMenu('cms/postmenucreate', {
         MEN_NAME: this.form.value.name,
@@ -57,7 +55,6 @@ export class CreateMenuComponent implements OnInit{
   }
   selected() {    
     console.log(this.selected);
-    debugger
   }
 
 }
