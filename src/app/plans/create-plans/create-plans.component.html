@@ -1,52 +1,131 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div class="alert alert-primary" role="alert">
-      You are creating plans
-  </div>
-  <div class="form-group row">
-      <label for="inputMenuname" class="col-sm-2 col-form-label">Menu name</label>
-      <div class="col-sm-8">
-          <input type="text" class="form-control is-valid" id="inputMenuname" placeholder="Menu name" required [formControl]="form.controls['name']">
-      </div>
-  </div>
-  <div class="form-group row">
-      <div class="col-sm-2">Is Parent</div>
-      <div class="col-sm-10">
-          <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="isParent" [formControl]="form.controls['isparent']" onclick="controller.disabled = this.checked,view.disabled = this.checked">
-              <label class="form-check-label" for="gridCheck1">
-                  Select this option if you're creating a principal menu option
-              </label>
-          </div>
-      </div>
-  </div>
-  <div class="form-group row">
-      <label for="inputMenuname" class="col-sm-2 col-form-label">Id Parent</label>
-      <div class="col-sm-8">
-          <input type="text" class="form-control is-valid" id="inputMenuparent" placeholder="Menu ID" required [formControl]="form.controls['parentid']">
-      </div>
-  </div>
-  <div class="form-group row">
-      <label for=inputMenuController class="col-sm-2 col-form-label">Menu Controller</label>
-      <div class="col-sm-8">
-          <input type="text" class="form-control is-valid" id="inputMenuController" name="controller" placeholder="Menu Controller" [formControl]="form.controls['controller']">
-      </div>
-  </div>
-  <div class="form-group row">
-      <label for="inputMenuView" class="col-sm-2 col-form-label">Menu View</label>
-      <div class="col-sm-8">
-          <input type="text" class="form-control is-valid" id="inputMenuView" name="view" placeholder="Menu View" [formControl]="form.controls['view']">
-      </div>
-  </div>
-  <div class="form-group">
-      <label for="selectRoles">Select Roles</label>
-      <select multiple="" class="form-control" id="selectRoles" [formControl]="form.controls['role']">
-          <option *ngFor="let role of roles" value="{{role.IDENTIFICATION}}">{{role.NAME_}}</option>
-      </select>
-  </div>
-  <div class="form-group row">
-      <div class="col-sm-6">
-          <button type="submit" class="btn btn-primary btn-lg" value="Submit">Create</button>
-          <button type="reset" class="btn btn-dark btn-lg" value="Reset">Cancel</button>
-      </div>
-  </div>
+<form>
+    <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="name" placeholder="Name">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="activationplans" class="col-sm-2 col-form-label">Activation</label>
+        <div class="col-sm-5">
+            <select class="form-control" id="activationplans">
+      <option>Active</option>
+      <option>Desactive</option>
+    </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="typeplan" class="col-sm-2 col-form-label">Type Plan</label>
+        <div class="col-sm-5">
+            <select class="form-control" id="typeplan">
+    <option>1</option>
+    <option>2</option>
+  </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="since" class="col-sm-2 col-form-label">Since</label>
+        <div class="col-sm-5">
+            <input type="date" class="form-control" id="since" placeholder="Since">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="until" class="col-sm-2 col-form-label">Until</label>
+        <div class="col-sm-5">
+            <input type="date" class="form-control" id="until" placeholder="Until">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="currency" class="col-sm-2 col-form-label">Currency</label>
+        <div class="col-sm-5">
+            <select class="form-control" id="currency">
+    <option>COP</option>
+    <option>USD</option>
+  </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="price" class="col-sm-2 col-form-label">Price</label>
+        <div class="col-sm-5">
+            <input type="Number" class="form-control" id="price" placeholder="Price">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="order" class="col-sm-2 col-form-label">Order</label>
+        <div class="col-sm-5">
+            <select class="form-control" id="order">
+    <option>1</option>
+    <option>2</option>
+  </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="numD" class="col-sm-2 col-form-label">Number Days</label>
+        <div class="col-sm-5">
+            <select class="form-control" id="numD">
+    <option>1</option>
+    <option>2</option>
+  </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="numNi" class="col-sm-2 col-form-label">Number Night</label>
+        <div class="col-sm-5">
+            <select class="form-control" id="numNi">
+    <option>1</option>
+    <option>2</option>
+  </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="acomodation" class="col-sm-2 col-form-label">Acomodation</label>
+        <div class="col-sm-5">
+            <select class="form-control" id="acomodation">
+    <option>1</option>
+    <option>2</option>
+  </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="included" class="col-sm-2 col-form-label">Included</label>
+        <div class="col-sm-5">
+            <select class="form-control" id="included">
+    <option>1</option>
+    <option>2</option>
+  </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="included" class="col-sm-2 col-form-label">City</label>
+        <div class="col-sm-5">
+            <select class="form-control" id="included">
+  <option>1</option>
+  <option>2</option>
+</select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="image" class="col-sm-2 col-form-label">Image</label>
+        <div class="col-sm-5">
+            <input type="url" class="form-control" id="image" placeholder="ImageURL">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="travel" class="col-sm-2 col-form-label">Travel Information</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" id="travel" rows="5" placeholder="Travel-Info"></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="travel" class="col-sm-2 col-form-label">Police</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" id="travel" rows="5" placeholder="Police"></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="travel" class="col-sm-2 col-form-label">Condition</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" id="travel" rows="5" placeholder="Condition"></textarea>
+        </div>
+    </div>
 </form>
